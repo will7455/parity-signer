@@ -40,4 +40,25 @@ describe('QrScanner Tests', () => {
     const wrapper = shallow(<QrScanner />);
     expect(wrapper).toMatchSnapshot();
   });
+
+  test('handles legacy Ethereum QR Code data', () => {
+    const wrapper = shallow(<QrScanner />);
+    expect(wrapper.state().type).toBe('back');
+  });
+
+  test('should have a reference to the React Native Camera module', () => {
+    const wrapper = mount(<QrScanner />);
+    expect(wrapper.instance().camera).toBeDefined();
+  });
+
+  test('on scan event', async () => {
+    const onBarCodeRead = jest.fn(data => data.rawData);
+    const wrapper = mount(<QrScanner onBarCodeRead={onBarCodeRead} />);
+    await wrapper
+      .find(TouchableOpacity)
+      .at(1)
+      .props()
+      .onPress();
+    expect(onBarCodeRead.mock.calls.length).toBe(1);
+  });
 });
