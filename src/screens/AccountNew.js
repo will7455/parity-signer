@@ -103,32 +103,23 @@ class AccountNewView extends React.Component {
               derivationPath={derivationPath}
               onSelect={({ newAddress, isBip39, newSeed }) => {
                 if (newAddress && isBip39 && newSeed){
-                  if (isSubstrate) {
-                    try {
-                      const suri = constructSURI({
-                        derivePath: derivationPath,
-                        password: derivationPassword,
-                        phrase: newSeed
-                      });
+                  try {
+                    const suri = constructSURI({
+                      derivePath: derivationPath,
+                      password: derivationPassword,
+                      phrase: newSeed
+                    });
 
-                      accounts.updateNew({ 
-                        address: newAddress,
-                        derivationPassword,
-                        derivationPath,
-                        seed: suri,
-                        seedPhrase: newSeed,
-                        validBip39Seed: isBip39
-                      });
-                    } catch (e) {
-                      console.error(e);
-                    }
-                  } else {
-                    // Ethereum account
-                    accounts.updateNew({
+                    accounts.updateNew({ 
                       address: newAddress,
-                      seed: newSeed,
+                      derivationPassword,
+                      derivationPath,
+                      seed: suri,
+                      seedPhrase: newSeed,
                       validBip39Seed: isBip39
                     });
+                  } catch (e) {
+                    console.error(e);
                   }
                 } else {
                   accounts.updateNew({ address: '', seed: '', validBip39Seed: false})

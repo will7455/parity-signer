@@ -79,6 +79,7 @@ export function constructSURI ({ derivePath = '', password = '', phrase }) {
   if (!phrase) {
     throw new Error('Cannot construct an SURI from emtpy phrase.');
   }
+  const tripleSlashPassword = password ? `///${password}` : '' ;
   
-  return `${phrase}${derivePath}///${password}`;
+  return `${phrase}${derivePath}${tripleSlashPassword}`;
 }

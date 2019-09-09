@@ -234,6 +234,7 @@ export default class ScannerStore extends Container<ScannerState> {
     const { isHash, sender, type } = this.state;
 
     const seed = await decryptData(sender.encryptedSeed, pin);
+    console.log('seed',seed)
     const isEthereum = NETWORK_LIST[sender.networkKey].protocol === NetworkProtocols.ETHEREUM;
 
     let signedData;

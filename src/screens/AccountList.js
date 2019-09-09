@@ -114,7 +114,7 @@ class AccountListView extends React.PureComponent {
     const { accounts, navigation, onAccountSelected } = this.props;
     const hasNoAccount = accounts.length < 1;
     const { navigate } = navigation;
-
+console.log('accounts',accounts)
     return (
       <View style={styles.body}>
         <Background />
