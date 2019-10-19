@@ -84,26 +84,42 @@ RCT_EXPORT_MODULE();
                                                &error);
   if (!privateKey) {
     *errMsg = [CFBridgingRelease(error) description];  // ARC takes ownership
-    CFRelease(privateKey);
     return nil;
   }
   
   SecKeyRef publicKey = SecKeyCopyPublicKey(privateKey);
+  
+  // Save public Key
+  OSStatus status = SecItemAdd((__bridge CFDictionaryRef)@{
+                                                           (__bridge id)kSecClass: (__bridge id)kSecClassKey,
+                                                           (__bridge id)kSecAttrKeyClass: (__bridge id)kSecAttrKeyClassPublic,
+                                                           (__bridge id)kSecAttrApplicationTag: publicKeyTag,
+                                                           (__bridge id)kSecValueRef: (__bridge id)publicKey
+                                                           }, nil);
+  
+  if (status != errSecSuccess) {
+    CFRelease(privateKey);
+    CFRelease(publicKey);
+    *errMsg = keychainStatusToString(status);
+    return nil;
+  }
+  
   CFRelease(privateKey);
   return publicKey;
 }
 
 RCT_EXPORT_METHOD(decrypt:(nonnull NSDictionary *)options
-                  callback:(RCTResponseSenderBlock)callback) {
+                  findEventsWithResolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     NSString* errMsg;
     NSData* clearText = [self decrypt:options errMsg:&errMsg];
     if (!clearText) {
-      callback(@[eccryptoMakeError(errMsg)]);
+      reject(@"ECCrypto", errMsg, eccryptoMakeError(errMsg));
       return;
     }
     NSString* base64ClearText = [[NSString alloc] initWithData:clearText encoding:NSUTF8StringEncoding];
-    callback(@[[NSNull null], base64ClearText]);
+    resolve(base64ClearText);
   });
 }
 
@@ -139,17 +155,18 @@ RCT_EXPORT_METHOD(decrypt:(nonnull NSDictionary *)options
 }
 
 RCT_EXPORT_METHOD(encrypt:(nonnull NSDictionary *)options
-                  callback:(RCTResponseSenderBlock)callback) {
+                  findEventsWithResolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     NSString* errMsg;
     NSData* cipherText = [self encrypt:options errMsg:&errMsg];
     if (!cipherText) {
-      callback(@[eccryptoMakeError(errMsg)]);
+      reject(@"ECCrypto", errMsg, eccryptoMakeError(errMsg));
       return;
     }
     
     NSString* base64cipherText = [cipherText base64EncodedStringWithOptions:0];
-    callback(@[[NSNull null], base64cipherText]);
+    resolve(base64cipherText);
   });
 }
 
@@ -294,9 +311,9 @@ NSString *keychainStatusToString(OSStatus status) {
   return uuidString;
 }
 
-NSDictionary* eccryptoMakeError(NSString* errMsg)
+NSError* eccryptoMakeError(NSString* errMsg)
 {
-  return RCTMakeAndLogError(errMsg, nil, nil);
+  return [NSError errorWithDomain:@"ECCrypto" code:1 userInfo:@{NSLocalizedDescriptionKey:errMsg}];
 }
 
 @end

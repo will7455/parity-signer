@@ -107,12 +107,12 @@ export function decryptData(data, password) {
 	return EthkeyBridge.decryptData(data, password);
 }
 
-export function encryptWithSecureKeystore ({data, label}, callback) {
-	return ECCrypto.encrypt({data, label}, callback);
+export function encryptWithSecureKeystore(data, label) {
+	return ECCrypto.encrypt({ data, label });
 }
 
-export function decryptWithSecureKeystore ({data, label}, callback) {
-	return ECCrypto.decrypt({data, label}, callback);
+export function decryptWithSecureKeystore(data, label) {
+	return ECCrypto.decrypt({ data, label });
 }
 
 // Creates a QR code for the UTF-8 representation of a string

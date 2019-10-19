@@ -74,7 +74,7 @@ public class ECCryptoModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void encrypt(ReadableMap map, Callback function) {
+    public void encrypt(ReadableMap map, Promise promise) {
         try {
             KeysetHandle keysetHandle = getOrGenerateNewKeysetHandle(map.getString("label"));
             KeysetHandle publicKeysetHandle = keysetHandle.getPublicKeysetHandle();
@@ -85,16 +85,16 @@ public class ECCryptoModule extends ReactContextBaseJavaModule {
             HybridEncrypt hybridEncrypt = HybridEncryptFactory.getPrimitive(publicKeysetHandle);
             byte[] cipherText = hybridEncrypt.encrypt(plainText, contextInfo);
 
-            function.invoke(null, toBase64(cipherText));
+            promise.resolve(toBase64(cipherText));
         } catch (Exception e) {
             Log.e("ECCrypto", "encryption error", e);
-            function.invoke(e.toString(), null);
+            promise.reject("ECCrypto error", e);
             return;
         }
     }
 
     @ReactMethod
-    public void decrypt(ReadableMap map, Callback function) {
+    public void decrypt(ReadableMap map, Promise promise) {
         try {
             KeysetHandle keysetHandle = getOrGenerateNewKeysetHandle(map.getString("label"));
             String cipherTextString = map.getString("data");
@@ -104,10 +104,10 @@ public class ECCryptoModule extends ReactContextBaseJavaModule {
             HybridDecrypt hybridDecrypt = HybridDecryptFactory.getPrimitive(keysetHandle);
             byte[] clearText = hybridDecrypt.decrypt(cipherText, contextInfo);
 
-            function.invoke(null, new String(clearText, "UTF-8"));
-        } catch (Exception ex) {
-            Log.e("ECCrypto", "decrypt error", ex);
-            function.invoke(ex.toString(), null);
+            promise.resolve(new String(clearText, "UTF-8"));
+        } catch (Exception e) {
+            Log.e("ECCrypto", "decrypt error", e);
+            promise.reject("ECCrypto error", e);
             return;
         }
     }
