@@ -20,18 +20,19 @@
 
 import TouchableItem from './TouchableItem';
 import { Text } from 'react-native';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { withNavigation } from 'react-navigation';
 import colors from '../colors';
 import fonts from '../fonts';
 
-class NetworkButton extends React.PureComponent<{
-	network: {
-		title: number,
-		color: string,
-		secondaryColor: string
-	}
-}> {
+class NetworkButton extends React.PureComponent {
+	static propTypes = {
+		color: PropTypes.string,
+		secondaryColor: PropTypes.string,
+		title: PropTypes.number
+	};
+
 	render() {
 		const { navigation, network } = this.props;
 

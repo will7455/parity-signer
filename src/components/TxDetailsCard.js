@@ -24,13 +24,7 @@ import fonts from '../fonts';
 
 const WEI_IN_ETH = 1000000000000000000;
 
-export default class TxDetailsCard extends React.PureComponent<{
-	value: string,
-	description: string,
-	gas: string,
-	gasPrice: string,
-	style: Object
-}> {
+export default class TxDetailsCard extends React.PureComponent {
 	static propTypes = {
 		description: PropTypes.string.isRequired,
 		gas: PropTypes.string.isRequired,

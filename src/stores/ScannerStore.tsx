@@ -52,22 +52,23 @@ type SignedTX = {
 };
 
 type ScannerState = {
+        busy: boolean,
 	completedFramesCount: number,
 	totalFrameCount: number,
 	dataToSign: string,
 	isHash: boolean,
 	isOversized: boolean,
-	message: string,
+	message: string | null,
 	multipartData: any,
 	multipartComplete: boolean,
-	recipient: Account,
+	recipient: Account | null,
 	scanErrorMsg: string,
-	sender: Account,
+	sender: Account | null,
 	signedData: string,
 	signedTxList: [SignedTX],
 	tx: Object,
 	txRequest: TXRequest | null,
-	type: 'transaction' | 'message',
+	type: 'transaction' | 'message' | null,
 	unsignedData: any
 };
 
@@ -483,7 +484,7 @@ export default class ScannerStore extends Container<ScannerState> {
 		return this.state.signedData;
 	}
 
-	setErrorMsg(scanErrorMsg) {
+	setErrorMsg(scanErrorMsg: string) {
 		this.setState({ scanErrorMsg });
 	}
 

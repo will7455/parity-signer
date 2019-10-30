@@ -30,13 +30,7 @@ import {
 import colors from '../colors';
 import fonts from '../fonts';
 
-export default class Button extends React.PureComponent<{
-	title: string,
-	onPress: () => any,
-	textStyles?: ?StyleSheet.Styles,
-	buttonStyles?: ?StyleSheet.Styles,
-	disabled?: ?boolean
-}> {
+export default class Button extends React.PureComponent {
 	static propTypes = {
 		disabled: PropTypes.bool,
 		onPress: PropTypes.func.isRequired,

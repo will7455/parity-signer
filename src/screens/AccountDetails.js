@@ -26,7 +26,6 @@ import fonts from '../fonts';
 import AccountCard from '../components/AccountCard';
 import QrView from '../components/QrView';
 import AccountsStore from '../stores/AccountsStore';
-import TxStore from '../stores/TxStore';
 import PopupMenu from '../components/PopupMenu';
 import { NETWORK_LIST, NetworkProtocols } from '../constants';
 
@@ -37,11 +36,10 @@ export default class AccountDetails extends React.Component {
 
 	render() {
 		return (
-			<Subscribe to={[AccountsStore, TxStore]}>
-				{(accounts, txStore) => (
+			<Subscribe to={[AccountsStore]}>
+				{accounts => (
 					<AccountDetailsView
 						{...this.props}
-						txStore={txStore}
 						accounts={accounts}
 						selected={accounts.getSelected() && accounts.getSelected().address}
 					/>

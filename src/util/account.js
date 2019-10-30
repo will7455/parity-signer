@@ -51,7 +51,7 @@ export function empty(address = '', networkKey = SubstrateNetworkKeys.KUSAMA) {
 		createdAt: new Date().getTime(),
 		derivationPassword: '',
 		derivationPath: '',
-		encryptedSeed: null,
+		encryptedSeed: '',
 		name: '',
 		networkKey: networkKey,
 		seed: '',

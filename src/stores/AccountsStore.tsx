@@ -54,16 +54,16 @@ export default class AccountsStore extends Container<AccountsState> {
 		selectedKey: ''
 	};
 
-	constructor(props) {
-		super(props);
+	constructor(props: any) {
+		super();
 		this.refreshList();
 	}
 
-	async select(accountKey) {
+	async select(accountKey: string) {
 		this.setState({ selectedKey: accountKey });
 	}
 
-	updateNew(accountUpdate) {
+	updateNew(accountUpdate: Account) {
 		this.setState({
 			newAccount: { ...this.state.newAccount, ...accountUpdate }
 		});
@@ -73,7 +73,7 @@ export default class AccountsStore extends Container<AccountsState> {
 		return this.state.newAccount;
 	}
 
-	async submitNew(pin) {
+	async submitNew(pin: string) {
 		const account = this.state.newAccount;
 
 		// only save a new account if the seed isn't empty
@@ -88,7 +88,7 @@ export default class AccountsStore extends Container<AccountsState> {
 		}
 	}
 
-	updateAccount(accountKey, updatedAccount) {
+	updateAccount(accountKey: string, updatedAccount: Account) {
 		const accounts = this.state.accounts;
 		const account = accounts.get(accountKey);
 
@@ -99,7 +99,7 @@ export default class AccountsStore extends Container<AccountsState> {
 		}
 	}
 
-	updateSelectedAccount(updatedAccount) {
+	updateSelectedAccount(updatedAccount: Account) {
 		this.updateAccount(this.state.selectedKey, updatedAccount);
 	}
 
@@ -109,7 +109,7 @@ export default class AccountsStore extends Container<AccountsState> {
 		});
 	}
 
-	async save(accountKey, account, pin = null) {
+	async save(accountKey: string, account: Account, pin: string) {
 		try {
 			// for account creation
 			if (pin && account.seed) {
@@ -125,7 +125,7 @@ export default class AccountsStore extends Container<AccountsState> {
 		}
 	}
 
-	async deleteAccount(accountKey) {
+	async deleteAccount(accountKey: string) {
 		const { accounts } = this.state;
 
 		accounts.delete(accountKey);
@@ -133,7 +133,7 @@ export default class AccountsStore extends Container<AccountsState> {
 		await deleteDbAccount(accountKey);
 	}
 
-	async unlockAccount(accountKey, pin) {
+	async unlockAccount(accountKey: string, pin: string) {
 		const { accounts } = this.state;
 		const account = accounts.get(accountKey);
 
@@ -157,7 +157,7 @@ export default class AccountsStore extends Container<AccountsState> {
 		return true;
 	}
 
-	deleteSensitiveData(account) {
+	deleteSensitiveData(account: Account) {
 		delete account.seed;
 		delete account.seedPhrase;
 		delete account.derivationPassword;
@@ -166,7 +166,7 @@ export default class AccountsStore extends Container<AccountsState> {
 		return account;
 	}
 
-	lockAccount(accountKey) {
+	lockAccount(accountKey: string) {
 		const { accounts } = this.state;
 		const account = accounts.get(accountKey);
 
@@ -178,7 +178,7 @@ export default class AccountsStore extends Container<AccountsState> {
 		}
 	}
 
-	async checkPinForSelected(pin) {
+	async checkPinForSelected(pin: string) {
 		const account = this.getSelected();
 
 		if (account && account.encryptedSeed) {
@@ -188,14 +188,14 @@ export default class AccountsStore extends Container<AccountsState> {
 		}
 	}
 
-	getById(account) {
+	getById(account: Account) {
 		return (
 			this.state.accounts.get(accountId(account)) ||
 			empty(account.address, account.networkKey)
 		);
 	}
 
-	getByAddress(address) {
+	getByAddress(address: string) {
 		if (!address) {
 			return false;
 		}

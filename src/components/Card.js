@@ -30,14 +30,7 @@ import {
 } from 'react-native';
 import colors from '../colors';
 
-export default class Card extends React.PureComponent<{
-	title: string,
-	secondaryText?: ?string,
-	labelText?: ?string,
-	footerStyle?: ?StyleSheet.Styles,
-	style: ?StyleSheet.Styles,
-	onPress: () => any
-}> {
+export default class Card extends React.PureComponent {
 	static propTypes = {
 		footerStyle: ViewPropTypes.style,
 		labelText: PropTypes.string,
