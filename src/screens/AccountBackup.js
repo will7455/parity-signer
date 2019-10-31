@@ -39,9 +39,9 @@ import AccountsStore from '../stores/AccountsStore';
 import { NetworkProtocols, NETWORK_LIST } from '../constants';
 
 export default class AccountBackup extends React.PureComponent {
-	static navigationOptions = {
-		title: 'Account Backup'
-	};
+	// static navigationOptions = {
+	// 	title: 'Account Backup'
+	// };
 	render() {
 		return (
 			<Subscribe to={[AccountsStore]}>

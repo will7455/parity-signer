@@ -39,8 +39,8 @@ import { GenericExtrinsicPayload } from '@polkadot/types';
 
 export default class TxDetails extends React.PureComponent {
 	static navigationOptions = {
-		headerBackTitle: 'Transaction details',
-		title: 'Transaction Details'
+		headerBackTitle: 'Back',
+		// title: 'Transaction Details'
 	};
 	render() {
 		return (

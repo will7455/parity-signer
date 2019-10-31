@@ -32,8 +32,8 @@ import { isAddressString, isJsonString, rawDataToU8A } from '../util/decoders';
 
 export default class Scanner extends React.PureComponent {
 	static navigationOptions = {
-		headerBackTitle: 'Scanner',
-		title: 'Transaction Details'
+		headerBackTitle: 'Back',
+		// title: 'Transaction Details'
 	};
 
 	constructor(props) {

@@ -31,7 +31,7 @@ import {
 export default class Loading extends React.PureComponent {
 	static navigationOptions = {
 		headerBackTitle: 'Back',
-		title: 'Add Account'
+		// title: 'Add Account'
 	};
 
 	async componentDidMount() {

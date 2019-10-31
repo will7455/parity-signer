@@ -31,9 +31,9 @@ import AccountsStore from '../stores/AccountsStore';
 import testIDs from '../../e2e/testIDs';
 
 export default class AccountList extends React.PureComponent {
-	static navigationOptions = {
-		title: 'Accounts'
-	};
+	// static navigationOptions = {
+	// 	title: 'Accounts'
+	// };
 
 	render() {
 		return (

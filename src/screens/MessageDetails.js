@@ -38,8 +38,8 @@ import { hexToAscii, isAscii } from '../util/strings';
 
 export default class MessageDetails extends React.PureComponent {
 	static navigationOptions = {
-		headerBackTitle: 'Transaction details',
-		title: 'Transaction Details'
+		headerBackTitle: 'Back',
+		// title: 'Transaction Details'
 	};
 	render() {
 		return (

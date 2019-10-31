@@ -48,7 +48,7 @@ import { constructSURI } from '../util/suri';
 export default class AccountRecover extends React.Component {
 	static navigationOptions = {
 		headerBackTitle: 'Back',
-		title: 'Recover Account'
+		// title: 'Recover Account'
 	};
 
 	render() {

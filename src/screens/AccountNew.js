@@ -37,7 +37,7 @@ import { constructSURI } from '../util/suri';
 export default class AccountNew extends React.Component {
 	static navigationOptions = {
 		headerBackTitle: 'Back',
-		title: 'New Account'
+		// title: 'New Account'
 	};
 	render() {
 		return (
